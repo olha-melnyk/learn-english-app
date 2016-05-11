@@ -2,6 +2,7 @@ package ws.bilka.learnenglish;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 // Temp solution, will be replaced with Database implementation
 
@@ -9,9 +10,27 @@ public class Utility {
     private static List<Topic> sTopics = new ArrayList<>();
 
     static {
-        Topic animalsTopic = new Topic("Animals", "твари");
+        Topic animalsTopic = new Topic("Animals", "Животные");
+            animalsTopic.addSubTopicWords(new Subtopic("Fish", "Рыба"));
+            animalsTopic.addSubTopicWords(new Subtopic("Predators", "Хищники"));
+            animalsTopic.addSubTopicWords(new Subtopic("Farm", "Ферма"));
+            animalsTopic.addSubTopicWords(new Subtopic("Birds", "Птицы"));
+            animalsTopic.addSubTopicWords(new Subtopic("Insects", "Насекомые"));
+            animalsTopic.addSubTopicWords(new Subtopic("Rodents", "Грызуны"));
+            animalsTopic.addSubTopicWords(new Subtopic("Reptiles", "Рептилии"));
+            animalsTopic.addSubTopicWords(new Subtopic("Invertebrates", "Беспозвоночные"));
+            animalsTopic.addSubTopicWords(new Subtopic("Mammals", "Млекопитающие"));
+
         Topic eatTopic = new Topic("Food", "еда");
+            eatTopic.addSubTopicWords(new Subtopic("Vegetables", "Овощи"));
+            eatTopic.addSubTopicWords(new Subtopic("Fruits", "Фрукты"));
+            eatTopic.addSubTopicWords(new Subtopic("Sweets", "Сладости"));
+            eatTopic.addSubTopicWords(new Subtopic("Products", "Продукты"));
+            eatTopic.addSubTopicWords(new Subtopic("Meat", "Mясо"));
+
         Topic mathematicsTopic = new Topic("Mathematics", "Математика");
+            mathematicsTopic.addSubTopicWords(new Subtopic("Цифры", "Digits"));
+
         Topic natureTopic = new Topic("Nature", "Природа");
         Topic humanTopic = new Topic("Person", "Человек");
         Topic transportTopic = new Topic("Transport", "Транспорт");
@@ -48,6 +67,15 @@ public class Utility {
 
     public static List<Topic> getTopics() {
         return sTopics;
+    }
+
+    public static List<Subtopic> getSubtopicByTopicName(String topicName) {
+        for(Topic topic : sTopics) {
+            if(topic.getTopic().equals(topicName)) {
+                return topic.getSubtopicList();
+            }
+        }
+        throw new NoSuchElementException();
     }
 
     public static int getIconResourceIdForTopic(String topic) {

@@ -12,21 +12,21 @@ import java.util.List;
 public class SubtopicListAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<Topic> mTopicList;
+    private List<Subtopic> mSubtopicList;
 
-    public SubtopicListAdapter(Context context, List<Topic> topicList) {
+    public SubtopicListAdapter(Context context, List<Subtopic> subtopicList) {
         this.mContext = context;
-        this.mTopicList = topicList;
+        this.mSubtopicList = subtopicList;
     }
 
     @Override
     public int getCount() {
-        return mTopicList.size();
+        return mSubtopicList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mTopicList.get(position);
+        return mSubtopicList.get(position);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class SubtopicListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Topic topic = mTopicList.get(position);
+        Subtopic subtopic = mSubtopicList.get(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_subtopic_item, parent, false);
         }
@@ -44,8 +44,8 @@ public class SubtopicListAdapter extends BaseAdapter {
         TextView title = (TextView) convertView.findViewById(R.id.list_item_title_textview);
         TextView titleTranslation = (TextView) convertView.findViewById(R.id.list_item_title_translate_textview);
 
-        title.setText(topic.getTopic());
-        titleTranslation.setText(topic.getTopic());
+        title.setText(subtopic.getSubtopic());
+        titleTranslation.setText(subtopic.getTranslationSubtopic());
 
         return convertView;
     }

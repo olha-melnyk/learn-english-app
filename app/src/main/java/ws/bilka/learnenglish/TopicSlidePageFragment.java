@@ -35,11 +35,13 @@ public class TopicSlidePageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mTopic = getArguments().getString(ARG_TOPIC);
             mTranslation = getArguments().getString(ARG_TRANSLATION);
             mImageResourceId = getArguments().getInt(ARG_IMAGE_DRAWABLE_ID);
         }
+
     }
 
     @Override
@@ -55,7 +57,7 @@ public class TopicSlidePageFragment extends Fragment {
         topicTranslation.setText(mTranslation);
         imageView.setImageResource(mImageResourceId);
 
-        SubtopicListAdapter adapter = new SubtopicListAdapter(this.getContext(), Utility.getTopics());
+        SubtopicListAdapter adapter = new SubtopicListAdapter(this.getContext(), Utility.getSubtopicByTopicName(mTopic));
         listView.setAdapter(adapter);
 
         return view;
