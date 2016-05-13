@@ -11,8 +11,24 @@ public class Utility {
 
     static {
         Topic animalsTopic = new Topic("Animals", "Животные");
-            animalsTopic.addSubTopicWords(new Subtopic("Fish", "Рыба"));
-            animalsTopic.addSubTopicWords(new Subtopic("Predators", "Хищники"));
+            Subtopic fish = new Subtopic("Fish", "Рыба");
+            animalsTopic.addSubTopicWords(fish);
+                fish.addWord(new Word("bass", "[ba:s]", "окунь", " "));
+                fish.addWord(new Word("carp", "[ca:p]", "карп", " "));
+                fish.addWord(new Word("dolphin", "['dɔlfin]", "дельфин", " "));
+                fish.addWord(new Word("eel", "['i:l]", "угорь", " "));
+                fish.addWord(new Word("halibut", " ['hælibət]", "палтус", " "));
+                fish.addWord(new Word("otter", "['ɔtə]", "выдра", " "));
+                fish.addWord(new Word("plaice", "['pleis]", "камбала", " "));
+                fish.addWord(new Word("salmon", " ['sæmən]", "лосось", " "));
+                fish.addWord(new Word("sawfish", "['sɔ:fiʃ]", "рыба-пила", " "));
+                fish.addWord(new Word("scallop", "['skɔləp]", "моллюск", " "));
+                fish.addWord(new Word("seahorse", "['si:hɔ:s]", "морской конек", " "));
+                fish.addWord(new Word("trout", "['traut]", "форель", " "));
+                fish.addWord(new Word("whale", "['weil]", "кит", " "));
+                fish.addWord(new Word("tuna/tuna fish", "['tuna]", "тунец", ""));
+
+            Subtopic predators = new Subtopic("Predators", "Хищники");
             animalsTopic.addSubTopicWords(new Subtopic("Farm", "Ферма"));
             animalsTopic.addSubTopicWords(new Subtopic("Birds", "Птицы"));
             animalsTopic.addSubTopicWords(new Subtopic("Insects", "Насекомые"));
@@ -23,7 +39,18 @@ public class Utility {
 
         Topic eatTopic = new Topic("Food", "еда");
             eatTopic.addSubTopicWords(new Subtopic("Vegetables", "Овощи"));
-            eatTopic.addSubTopicWords(new Subtopic("Fruits", "Фрукты"));
+            Subtopic food = new Subtopic("Fruits", "Фрукты");
+                food.addWord(new Word("banana", "[banana]", "банан", "I need more bananas!"));
+                food.addWord(new Word("grapes", "[greip]", "виноград", "If you have diabetes or stomach ulcers stay away from grapes!"));
+                food.addWord(new Word("grapefruit", "['greipfru:t]", "грейпфрут", "Grapefruit is one of the best fat burning foods out there."));
+                food.addWord(new Word("pear", "[pɛː]", "груша", "Truthfully, I chose this because of the sides: sweet potatoes and pears."));
+                food.addWord(new Word("apple", "[ˈap(ə)l]", "яблоко", "Cate picked a few apples from a fruit tree in the grove, wondering if they had any food to eat."));
+                food.addWord(new Word("watermelon", "[ˈwɔːtəmɛlən]", "арбуз", "Where available raccoons may also eat peaches, plums, figs, citrus fruits, watermelons, beech nuts, and walnuts."));
+                food.addWord(new Word("orange", "[ˈɒrɪn(d)ʒ]", "апельсин", "When an orange is juiced, fibre and other health-giving elements are left behind."));
+                food.addWord(new Word("pineapple", "[ˈpʌɪnap(ə)l]", "ананас", "Fruit such as pineapples, coconuts, oranges, mangoes, bananas, apples, and lychees are subject to seasonal availability."));
+                food.addWord(new Word("coconut", "[ˈkəʊkənʌt]", "кокос", "These layers surround the hard dark-brown shell, encasing the coconut seed."));
+                food.addWord(new Word("peach", "[piːtʃ/]", "персик", "Popular fillings include stone fruits, like peaches and plums."));
+
             eatTopic.addSubTopicWords(new Subtopic("Sweets", "Сладости"));
             eatTopic.addSubTopicWords(new Subtopic("Products", "Продукты"));
             eatTopic.addSubTopicWords(new Subtopic("Meat", "Mясо"));
@@ -77,6 +104,18 @@ public class Utility {
         }
         throw new NoSuchElementException();
     }
+
+    public  static List<Word> getWords(String topicName, String subtopicName) {
+        List<Subtopic> subtopics = getSubtopicByTopicName(topicName);
+        for (Subtopic subtopic : subtopics) {
+            if (subtopic.getSubtopic().equals(subtopicName)) {
+                return subtopic.getWordList();
+            }
+        }
+        throw new NoSuchElementException();
+    }
+
+
 
     public static int getIconResourceIdForTopic(String topic) {
         switch (topic) {

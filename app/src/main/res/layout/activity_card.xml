@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ws.bilka.learnenglish.CardActivity">
+
+        <TextView
+            android:id="@+id/textEngWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="30dp"
+            android:textSize="15pt"
+            android:text="@string/words">
+        </TextView>
+
+        <TextView
+            android:id="@+id/textTranscription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textEngWord"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="30dp"
+            android:textSize="15pt"
+            android:text="@string/transcription">
+        </TextView>
+
+        <TextView
+            android:id="@+id/textRusWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="30dp"
+            android:layout_below="@id/textTranscription"
+            android:textSize="15pt"
+            android:text="@string/translation">
+        </TextView>
+
+        <TextView
+            android:id="@+id/textExample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textRusWord"
+            android:textSize="7pt"
+            android:text="@string/example"
+            android:layout_margin="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+        </TextView>
+
+</RelativeLayout>

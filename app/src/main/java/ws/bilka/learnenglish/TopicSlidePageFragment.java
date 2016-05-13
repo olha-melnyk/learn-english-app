@@ -1,14 +1,18 @@
 package ws.bilka.learnenglish;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.List;
 
 public class TopicSlidePageFragment extends Fragment {
     private static final String ARG_TOPIC = "topic";
@@ -49,7 +53,7 @@ public class TopicSlidePageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_topic_slide_page, container, false);
         ListView listView = (ListView) view.findViewById(R.id.list_item_pager);
 
-        TextView topicName = (TextView) view.findViewById(R.id.list_item_topic_textView);
+        final TextView topicName = (TextView) view.findViewById(R.id.list_item_topic_textView);
         TextView topicTranslation = (TextView) view.findViewById(R.id.list_item_words_textView);
         ImageView imageView = (ImageView) view.findViewById(R.id.list_item_icon);
 
@@ -59,6 +63,22 @@ public class TopicSlidePageFragment extends Fragment {
 
         SubtopicListAdapter adapter = new SubtopicListAdapter(this.getContext(), Utility.getSubtopicByTopicName(mTopic));
         listView.setAdapter(adapter);
+
+
+        listView = (ListView) view.findViewById(R.id.list_item_pager);
+
+        final List<Subtopic> subtopicList = Utility.getSubtopicByTopicName(mTopic);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(), CardActivity.class);
+                String subtopic = subtopicList.get(position).getSubtopic();
+                intent.putExtra("topic", mTopic);
+                intent.putExtra("subtopic", subtopic);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
