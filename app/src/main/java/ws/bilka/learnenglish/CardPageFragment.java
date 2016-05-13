@@ -12,7 +12,7 @@ public class CardPageFragment extends Fragment {
 
     private static final String ARG_WORD = "word";
     private static final String ARG_TRANSCRIPTION = "transcription";
-    private static final String ARG_TRANSLATE = "translation";
+    private static final String ARG_TRANSLATION = "translation";
     private static final String ARG_EXAMPLE = "example";
 
     private String mWord;
@@ -26,9 +26,9 @@ public class CardPageFragment extends Fragment {
     public static CardPageFragment newInstance(String word, String transcription, String translation, String example) {
         CardPageFragment fragment = new CardPageFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_WORD,word);
+        args.putString(ARG_WORD, word);
         args.putString(ARG_TRANSCRIPTION, transcription);
-        args.putString(ARG_TRANSLATE, translation);
+        args.putString(ARG_TRANSLATION, translation);
         args.putString(ARG_EXAMPLE, example);
         fragment.setArguments(args);
         return fragment;
@@ -41,7 +41,7 @@ public class CardPageFragment extends Fragment {
         if (getArguments() != null) {
             mWord = getArguments().getString(ARG_WORD);
             mTranscription = getArguments().getString(ARG_TRANSCRIPTION);
-            mTranslation = getArguments().getString(ARG_TRANSLATE);
+            mTranslation = getArguments().getString(ARG_TRANSLATION);
             mExample = getArguments().getString(ARG_EXAMPLE);
         }
     }
