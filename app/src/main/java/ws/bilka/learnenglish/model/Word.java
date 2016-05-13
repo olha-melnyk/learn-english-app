@@ -1,4 +1,4 @@
-package ws.bilka.learnenglish;
+package ws.bilka.learnenglish.model;
 
 public class Word {
     private final String mOrigin;

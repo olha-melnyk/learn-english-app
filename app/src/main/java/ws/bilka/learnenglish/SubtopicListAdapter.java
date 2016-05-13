@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ws.bilka.learnenglish.model.Subtopic;
+
 public class SubtopicListAdapter extends BaseAdapter {
 
     private Context mContext;
@@ -44,8 +46,8 @@ public class SubtopicListAdapter extends BaseAdapter {
         TextView title = (TextView) convertView.findViewById(R.id.list_item_title_textview);
         TextView titleTranslation = (TextView) convertView.findViewById(R.id.list_item_title_translate_textview);
 
-        title.setText(subtopic.getSubtopic());
-        titleTranslation.setText(subtopic.getTranslationSubtopic());
+        title.setText(subtopic.getSubtopicName());
+        titleTranslation.setText(subtopic.getSubtopicTranslation());
 
         return convertView;
     }

@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import ws.bilka.learnenglish.model.Subtopic;
+import ws.bilka.learnenglish.model.Topic;
+import ws.bilka.learnenglish.model.Word;
+
 // Temp solution, will be replaced with Database implementation
 
 public class Utility {
@@ -12,7 +16,7 @@ public class Utility {
     static {
         Topic animalsTopic = new Topic("Animals", "Животные");
             Subtopic fish = new Subtopic("Fish", "Рыба");
-            animalsTopic.addSubTopicWords(fish);
+            animalsTopic.addSubtopic(fish);
                 fish.addWord(new Word("bass", "[ba:s]", "окунь", " "));
                 fish.addWord(new Word("carp", "[ca:p]", "карп", " "));
                 fish.addWord(new Word("dolphin", "['dɔlfin]", "дельфин", " "));
@@ -29,16 +33,16 @@ public class Utility {
                 fish.addWord(new Word("tuna/tuna fish", "['tuna]", "тунец", ""));
 
             Subtopic predators = new Subtopic("Predators", "Хищники");
-            animalsTopic.addSubTopicWords(new Subtopic("Farm", "Ферма"));
-            animalsTopic.addSubTopicWords(new Subtopic("Birds", "Птицы"));
-            animalsTopic.addSubTopicWords(new Subtopic("Insects", "Насекомые"));
-            animalsTopic.addSubTopicWords(new Subtopic("Rodents", "Грызуны"));
-            animalsTopic.addSubTopicWords(new Subtopic("Reptiles", "Рептилии"));
-            animalsTopic.addSubTopicWords(new Subtopic("Invertebrates", "Беспозвоночные"));
-            animalsTopic.addSubTopicWords(new Subtopic("Mammals", "Млекопитающие"));
+            animalsTopic.addSubtopic(new Subtopic("Farm", "Ферма"));
+            animalsTopic.addSubtopic(new Subtopic("Birds", "Птицы"));
+            animalsTopic.addSubtopic(new Subtopic("Insects", "Насекомые"));
+            animalsTopic.addSubtopic(new Subtopic("Rodents", "Грызуны"));
+            animalsTopic.addSubtopic(new Subtopic("Reptiles", "Рептилии"));
+            animalsTopic.addSubtopic(new Subtopic("Invertebrates", "Беспозвоночные"));
+            animalsTopic.addSubtopic(new Subtopic("Mammals", "Млекопитающие"));
 
         Topic eatTopic = new Topic("Food", "еда");
-            eatTopic.addSubTopicWords(new Subtopic("Vegetables", "Овощи"));
+            eatTopic.addSubtopic(new Subtopic("Vegetables", "Овощи"));
             Subtopic food = new Subtopic("Fruits", "Фрукты");
                 food.addWord(new Word("banana", "[banana]", "банан", "I need more bananas!"));
                 food.addWord(new Word("grapes", "[greip]", "виноград", "If you have diabetes or stomach ulcers stay away from grapes!"));
@@ -51,12 +55,12 @@ public class Utility {
                 food.addWord(new Word("coconut", "[ˈkəʊkənʌt]", "кокос", "These layers surround the hard dark-brown shell, encasing the coconut seed."));
                 food.addWord(new Word("peach", "[piːtʃ/]", "персик", "Popular fillings include stone fruits, like peaches and plums."));
 
-            eatTopic.addSubTopicWords(new Subtopic("Sweets", "Сладости"));
-            eatTopic.addSubTopicWords(new Subtopic("Products", "Продукты"));
-            eatTopic.addSubTopicWords(new Subtopic("Meat", "Mясо"));
+            eatTopic.addSubtopic(new Subtopic("Sweets", "Сладости"));
+            eatTopic.addSubtopic(new Subtopic("Products", "Продукты"));
+            eatTopic.addSubtopic(new Subtopic("Meat", "Mясо"));
 
         Topic mathematicsTopic = new Topic("Mathematics", "Математика");
-            mathematicsTopic.addSubTopicWords(new Subtopic("Цифры", "Digits"));
+            mathematicsTopic.addSubtopic(new Subtopic("Цифры", "Digits"));
 
         Topic natureTopic = new Topic("Nature", "Природа");
         Topic humanTopic = new Topic("Person", "Человек");
@@ -98,8 +102,8 @@ public class Utility {
 
     public static List<Subtopic> getSubtopicByTopicName(String topicName) {
         for(Topic topic : sTopics) {
-            if(topic.getTopic().equals(topicName)) {
-                return topic.getSubtopicList();
+            if(topic.getTopicName().equals(topicName)) {
+                return topic.getSubtopics();
             }
         }
         throw new NoSuchElementException();
@@ -108,8 +112,8 @@ public class Utility {
     public  static List<Word> getWords(String topicName, String subtopicName) {
         List<Subtopic> subtopics = getSubtopicByTopicName(topicName);
         for (Subtopic subtopic : subtopics) {
-            if (subtopic.getSubtopic().equals(subtopicName)) {
-                return subtopic.getWordList();
+            if (subtopic.getSubtopicName().equals(subtopicName)) {
+                return subtopic.getWords();
             }
         }
         throw new NoSuchElementException();

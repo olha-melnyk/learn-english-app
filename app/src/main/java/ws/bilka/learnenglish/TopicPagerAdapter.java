@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
+import ws.bilka.learnenglish.model.Topic;
+
 public class TopicPagerAdapter extends FragmentStatePagerAdapter {
 
     private Context mContext;
@@ -26,8 +28,8 @@ public class TopicPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        String topic = mTopicList.get(position).getTopic();
-        String topicTranslate = mTopicList.get(position).getTranslateTopic();
+        String topic = mTopicList.get(position).getTopicName();
+        String topicTranslate = mTopicList.get(position).getTopicTranslation();
         int iconResourceId = Utility.getIconResourceIdForTopic(topic);
 
         return TopicSlidePageFragment.newInstance(topic, topicTranslate, iconResourceId);

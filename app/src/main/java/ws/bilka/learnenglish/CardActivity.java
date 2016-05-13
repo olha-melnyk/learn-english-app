@@ -13,6 +13,8 @@ import android.view.View;
 
 import java.util.List;
 
+import ws.bilka.learnenglish.model.Word;
+
 public class CardActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;

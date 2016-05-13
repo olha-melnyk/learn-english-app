@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ws.bilka.learnenglish.model.Subtopic;
+
 public class TopicSlidePageFragment extends Fragment {
     private static final String ARG_TOPIC = "topic";
     private static final String ARG_TRANSLATION = "translation";
@@ -73,7 +75,7 @@ public class TopicSlidePageFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(view.getContext(), CardActivity.class);
-                String subtopic = subtopicList.get(position).getSubtopic();
+                String subtopic = subtopicList.get(position).getSubtopicName();
                 intent.putExtra("topic", mTopic);
                 intent.putExtra("subtopic", subtopic);
                 startActivity(intent);
