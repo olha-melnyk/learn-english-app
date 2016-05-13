@@ -69,14 +69,11 @@ public class CardActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Fragment fragment = new CardPageFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("word", mWordList.get(position).getOrigin());
-            bundle.putString("transcription", mWordList.get(position).getTranscription());
-            bundle.putString("translation", mWordList.get(position).getTranslation());
-            bundle.putString("example", mWordList.get(position).getExample());
-            fragment.setArguments(bundle);
-            return fragment;
+            String word = mWordList.get(position).getOrigin();
+            String transcription = mWordList.get(position).getTranscription();
+            String translation = mWordList.get(position).getTranslation();
+            String example = mWordList.get(position).getExample();
+            return CardPageFragment.newInstance(word, transcription, translation, example);
         }
 
         @Override
