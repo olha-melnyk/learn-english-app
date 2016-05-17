@@ -1,6 +1,8 @@
 package ws.bilka.learnenglish;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,11 +13,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import ws.bilka.learnenglish.database.WordsContract;
+import ws.bilka.learnenglish.database.WordsSQLiteDbHelper;
 import ws.bilka.learnenglish.model.Word;
 
 public class CardActivity extends AppCompatActivity {
+
+    private static final String TAG = CardActivity.class.getSimpleName();
 
     private ViewPager mViewPager;
 
@@ -23,12 +30,11 @@ public class CardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String subtopic = getIntent().getStringExtra("subtopic");
-        String topic = getIntent().getStringExtra("topic");
+        long subtopicId = getIntent().getLongExtra("subtopic_id", -1);
         setContentView(R.layout.activity_card_slide);
 
         mViewPager = (ViewPager) findViewById(R.id.pagerCard);
-        final PagerAdapter pagerAdapter = new CardPagerAdapter (getSupportFragmentManager(), CardActivity.this, Utility.getWords(topic, subtopic));
+        final PagerAdapter pagerAdapter = new CardPagerAdapter (getSupportFragmentManager(), this, loadWords(subtopicId));
         mViewPager.setAdapter(pagerAdapter);
 
         final View nextButton = findViewById(R.id.btnNext);
@@ -46,6 +52,41 @@ public class CardActivity extends AppCompatActivity {
                 mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
             }
         });
+    }
+
+    private List<Word> loadWords(long subtopicId) {
+        WordsSQLiteDbHelper dbHelper = new WordsSQLiteDbHelper(this);
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        List<Word> words = new LinkedList<>();
+        Cursor cursor = database.query(
+                WordsContract.WordEntry.TABLE_NAME,
+                new String[]{
+                        WordsContract.WordEntry.COLUMN_WORD_ORIGIN,
+                        WordsContract.WordEntry.COLUMN_TRANSCRIPTION,
+                        WordsContract.WordEntry.COLUMN_TRANSLATION,
+                        WordsContract.WordEntry.COLUMN_EXAMPLE
+                },
+                WordsContract.WordEntry.COLUMN_SUBTOPIC_KEY + " = " + subtopicId,
+                null,
+                null,
+                null,
+                null
+        );
+
+        boolean hasNext = cursor.moveToFirst();
+        while(hasNext) {
+            String origin = cursor.getString(0);
+            String transcription = cursor.getString(1);
+            String translation = cursor.getString(2);
+            String example = cursor.getString(3);
+
+            words.add(new Word(origin, transcription, translation, example));
+            hasNext = cursor.moveToNext();
+        }
+
+        cursor.close();
+        database.close();
+        return words;
     }
 
     @Override

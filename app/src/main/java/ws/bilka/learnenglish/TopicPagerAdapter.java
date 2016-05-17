@@ -13,26 +13,24 @@ import ws.bilka.learnenglish.model.Topic;
 public class TopicPagerAdapter extends FragmentStatePagerAdapter {
 
     private Context mContext;
-    private List<Topic> mTopicList;
+    private List<Topic> mTopics;
 
-    public TopicPagerAdapter(FragmentManager fm, Context context, List<Topic> topicList) {
+    public TopicPagerAdapter(FragmentManager fm, Context context, List<Topic> topics) {
         super(fm);
         this.mContext = context;
-        this.mTopicList = topicList;
+        this.mTopics = topics;
     }
 
     @Override
     public int getCount() {
-        return mTopicList.size();
+        return mTopics.size();
     }
 
     @Override
     public Fragment getItem(int position) {
-        String topic = mTopicList.get(position).getTopicName();
-        String topicTranslate = mTopicList.get(position).getTopicTranslation();
-        int iconResourceId = Utility.getIconResourceIdForTopic(topic);
+        Topic topic = mTopics.get(position);
+        int iconResourceId = Utility.getIconResourceIdForTopic(topic.getTopicName());
 
-        return TopicSlidePageFragment.newInstance(topic, topicTranslate, iconResourceId);
+        return TopicSlidePageFragment.newInstance(topic, iconResourceId);
     }
-
 }
