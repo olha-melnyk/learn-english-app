@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.english.flashcards.activities.GameStatsActivity"
+        >
+
+        <LinearLayout
+            android:id="@+id/linerLayoutOfRightAnswers"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/labelOfRightAnswers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Right answers"
+                android:textSize="10pt"
+                android:fontFamily="sans-serif-black"
+                android:padding="@dimen/activity_horizontal_margin"
+                />
+            <TextView
+                android:id="@+id/numOfWrongAnswers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wrong answers"
+                android:fontFamily="sans-serif-black"
+                android:textSize="10pt"
+                android:padding="@dimen/activity_horizontal_margin"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/labelOfWrongAnswers"
+            android:layout_toRightOf="@id/linerLayoutOfRightAnswers"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15pt">
+
+            <TextView
+                android:id="@+id/numberOfRightAnswer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10pt"
+                android:padding="@dimen/activity_horizontal_margin"
+                />
+
+            <TextView
+                android:id="@+id/numberOfWrongAnswer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10pt"
+                android:padding="@dimen/activity_horizontal_margin"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <Button
+                android:id="@+id/tryAgainBtn"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-black"
+                android:text="Сыграть еще раз"/>
+
+            <Button
+                android:id="@+id/goodBtn"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-black"
+                android:text="хорошо"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

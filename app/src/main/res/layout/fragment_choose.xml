@@ -1,0 +1,118 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".ChooseFragment">
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:orientation="vertical"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 android:weightSum="2">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/chooseWordTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="20pt"
+                android:text="squirrel"
+                android:textColor="#000"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TableRow
+                android:layout_alignParentBottom="true"
+                android:layout_margin="10dp"
+                android:id="@+id/firstBtnChoose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                >
+
+                <Button
+                    android:id="@+id/btnChoose1"
+                    android:layout_width="match_parent"
+                    android:layout_height="30pt"
+                    android:layout_weight="1"
+                    android:text="Белка"
+                    android:textSize="5pt"
+                    />
+                <Button
+                    android:id="@+id/btnChoose2"
+                    android:layout_width="match_parent"
+                    android:layout_height="30pt"
+                    android:layout_weight="1"
+                    android:text="Волк"
+                    android:textSize="5pt"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_above="@id/firstBtnChoose"
+                android:layout_margin="10dp"
+                android:id="@+id/secondBtnChoose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <Button
+                    android:id="@+id/btnChoose3"
+                    android:layout_width="match_parent"
+                    android:layout_height="30pt"
+                    android:layout_weight="1"
+                    android:text="Орех"
+                    android:textSize="5pt"/>
+
+                <Button
+                    android:id="@+id/btnChoose4"
+                    android:layout_width="match_parent"
+                    android:layout_height="30pt"
+                    android:layout_weight="1"
+                    android:text="Лиса"
+                    android:textSize="5pt"/>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_above="@id/secondBtnChoose"
+                android:layout_margin="10dp"
+                android:id="@+id/thirdBtnChoose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+
+
+                <Button
+                    android:id="@+id/btnChoose5"
+                    android:layout_width="match_parent"
+                    android:layout_height="30pt"
+                    android:layout_weight="1"
+                    android:text="Слон"
+                    android:textSize="5pt"/>
+
+                <Button
+                    android:id="@+id/btnChoose6"
+                    android:layout_width="match_parent"
+                    android:layout_height="30pt"
+                    android:layout_weight="1"
+                    android:text="Кабан"
+                    android:textSize="5pt"/>
+
+            </TableRow>
+        </RelativeLayout>
+
+    </TableLayout>
+
+</FrameLayout>
