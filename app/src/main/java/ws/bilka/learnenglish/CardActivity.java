@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 
 import java.util.Arrays;
@@ -30,6 +29,8 @@ public class CardActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private static final int NUM_OF_RESPONSES = 6;
+    private int[] numOfRightAnswers = new int[1];
+    private int[] numOfWrongAnswers = new int[1];
 
 
     @Override
@@ -40,17 +41,12 @@ public class CardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_card_slide);
         mViewPager = (ViewPager) findViewById(R.id.pagerCard);
 
-        final int[] numOfRightAnswers = new int[1];
-        final int[] numOfWrongAnswers = new int[1];
-
         final List<Word> words = loadWords(subtopicId);
-
         AnswerClickHandler answerClickHandler = new AnswerClickHandler() {
             @Override
             public void onClick(String answer) {
                 int currentPosition = mViewPager.getCurrentItem();
                 String rightAnswer = words.get(currentPosition % words.size()).getTranslation();
-                Log.i(TAG, "right answer" +rightAnswer);
 
                 if (answer.equals(rightAnswer)) {
                     numOfRightAnswers[0]++;
@@ -60,9 +56,10 @@ public class CardActivity extends AppCompatActivity {
 
                 int nextItemPosition = currentPosition + 1;
                 if (nextItemPosition == words.size()) {
-                    Intent gameStatsIntent = new Intent(CardActivity.this, GameStatsActivity.class);
+                    Intent gameStatsIntent = new Intent(CardActivity.this, StatsFragment.class);
                     gameStatsIntent.putExtra("right", numOfRightAnswers[0]);
                     gameStatsIntent.putExtra("wrong", numOfWrongAnswers[0]);
+                    gameStatsIntent.putExtra("subtopic", subtopicId);
                     startActivity(gameStatsIntent);
                 } else {
                     mViewPager.setCurrentItem(nextItemPosition);
@@ -140,6 +137,7 @@ public class CardActivity extends AppCompatActivity {
 
         private AnswerClickHandler mAnswerClickHandler;
         private Random mRand = new Random();
+        private RandomHelper mRandom = new RandomHelper();
 
         public CardPagerAdapter(FragmentManager fm, Context context, List<Word> wordList, AnswerClickHandler answerClickHandler) {
             super(fm);
@@ -151,34 +149,47 @@ public class CardActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+
+            int index = position % mWordList.size();
+
             String[] possibleAnswers = new String[NUM_OF_RESPONSES];
             List<Word> words = new LinkedList<>(mWordList);
 
             Collections.shuffle(Arrays.asList(possibleAnswers));
 
             if (position < mWordList.size()) {
-                String word = mWordList.get(position).getOrigin();
-                String transcription = mWordList.get(position).getTranscription();
-                String translation = mWordList.get(position).getTranslation();
-                String example = mWordList.get(position).getExample();
+                String word = mWordList.get(index).getOrigin();
+                String transcription = mWordList.get(index).getTranscription();
+                String translation = mWordList.get(index).getTranslation();
+                String example = mWordList.get(index).getExample();
                 return CardPageFragment.newInstance(word, transcription, translation, example);
-            } else {
-                possibleAnswers[0] = words.remove(position % mWordList.size()).getTranslation();
-                for(int i=1; i<NUM_OF_RESPONSES; i++) {
+            } else if(position < mWordList.size() * 2) {
+                possibleAnswers[0] = words.remove(index).getTranslation();
+                for (int i = 1; i < NUM_OF_RESPONSES; i++) {
                     int randIndex = mRand.nextInt(words.size());
                     possibleAnswers[i] = words.remove(randIndex).getTranslation();
                 }
-
-                String nameWord = mWordList.get(position % mWordList.size()).getOrigin();
+                String nameWord = mWordList.get(index).getOrigin();
                 ChooseFragment chooseFragment = ChooseFragment.newInstance(nameWord, possibleAnswers);
                 chooseFragment.setAnswerClickHandler(mAnswerClickHandler);
                 return chooseFragment;
+
+            } else if (position < mWordList.size() * 3) {
+                String word = mWordList.get(index).getOrigin();
+                int randInd = mRandom.randInt(mWordList.size(), index);
+                String[] answers = new String[]{mWordList.get(index).getTranslation(), mWordList.get(randInd).getTranslation()};
+                Collections.shuffle(Arrays.asList(answers));
+                TrueFalseFragment trueFalseFragment = TrueFalseFragment.newInstance(word, answers[0], answers[1]);
+                trueFalseFragment.setAnswerClickHandler(mAnswerClickHandler);
+                return trueFalseFragment;
+            } else {
+                return StatsFragment.newInstance(numOfRightAnswers[0], numOfWrongAnswers[0]);
             }
         }
 
         @Override
         public int getCount() {
-            return mWordList.size() * 2;
+            return mWordList.size() * 3 + 1;
         }
     }
 }
