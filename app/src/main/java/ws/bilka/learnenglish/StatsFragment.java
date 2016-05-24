@@ -1,6 +1,7 @@
 package ws.bilka.learnenglish;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,22 +12,27 @@ import android.widget.TextView;
 
 
 public class StatsFragment extends Fragment {
+    private static final String TAG = StatsFragment.class.getSimpleName();
 
     private static final String ARG_NUM_OF_RIGHT_ANSWERS = "right";
     private static final String ARG_NUM_OF_WRONG_ANSWERS = "wrong";
+    private static final String ARG_SUBTOPIC_ID = "subtopic_id";
 
     private int mRightAnswers;
     private int mWrongAnswers;
+    private long mSubtopicId;
 
     public StatsFragment() {
         // Required empty public constructor
     }
 
-    public static StatsFragment newInstance(int rightAnswer, int wrongAnswer) {
+    public static StatsFragment newInstance(int rightAnswer, int wrongAnswer, long subtopicId) {
+
         StatsFragment fragment = new StatsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_NUM_OF_RIGHT_ANSWERS, rightAnswer);
         args.putInt(ARG_NUM_OF_WRONG_ANSWERS, wrongAnswer);
+        args.putLong(ARG_SUBTOPIC_ID, subtopicId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,11 +43,12 @@ public class StatsFragment extends Fragment {
         if (getArguments() != null) {
             mRightAnswers = getArguments().getInt(ARG_NUM_OF_RIGHT_ANSWERS);
             mWrongAnswers = getArguments().getInt(ARG_NUM_OF_WRONG_ANSWERS);
+            mSubtopicId = getArguments().getLong(ARG_SUBTOPIC_ID);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 
         View viewStats = inflater.inflate(R.layout.fragment_stats, container, false);
 
@@ -55,7 +62,10 @@ public class StatsFragment extends Fragment {
         tryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getContext(), CardActivity.class);
+                long subtopic = mSubtopicId;
+                intent.putExtra("subtopic_id", subtopic);
+                startActivity(intent);
             }
         });
 
@@ -63,7 +73,10 @@ public class StatsFragment extends Fragment {
         goodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                long subtopic = mSubtopicId;
+                intent.putExtra("subtopic_id", subtopic);
+                startActivity(intent);
             }
         });
         return viewStats;

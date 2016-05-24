@@ -57,7 +57,7 @@ public class TopicSlidePageFragment extends Fragment {
         topicTranslation.setText(mTopic.getTopicTranslation());
         imageView.setImageResource(mImageResourceId);
 
-        final List<Subtopic> subtopics = mTopic.getSubtopics();
+        final List<Subtopic>    subtopics = mTopic.getSubtopics();
         final SubtopicListAdapter adapter = new SubtopicListAdapter(this.getContext(), subtopics);
         listView.setAdapter(adapter);
 

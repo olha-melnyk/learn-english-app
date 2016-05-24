@@ -12,6 +12,8 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -31,17 +33,18 @@ public class CardActivity extends AppCompatActivity {
     private static final int NUM_OF_RESPONSES = 6;
     private int[] numOfRightAnswers = new int[1];
     private int[] numOfWrongAnswers = new int[1];
+    private long mSubtopicId;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final long subtopicId = getIntent().getLongExtra("subtopic_id", -1);
+        mSubtopicId = getIntent().getLongExtra("subtopic_id", -1);
         setContentView(R.layout.activity_card_slide);
         mViewPager = (ViewPager) findViewById(R.id.pagerCard);
 
-        final List<Word> words = loadWords(subtopicId);
+        final List<Word> words = loadWords(mSubtopicId);
         AnswerClickHandler answerClickHandler = new AnswerClickHandler() {
             @Override
             public void onClick(String answer) {
@@ -59,31 +62,33 @@ public class CardActivity extends AppCompatActivity {
                     Intent gameStatsIntent = new Intent(CardActivity.this, StatsFragment.class);
                     gameStatsIntent.putExtra("right", numOfRightAnswers[0]);
                     gameStatsIntent.putExtra("wrong", numOfWrongAnswers[0]);
-                    gameStatsIntent.putExtra("subtopic", subtopicId);
+                    gameStatsIntent.putExtra("subtopic", mSubtopicId);
                     startActivity(gameStatsIntent);
                 } else {
                     mViewPager.setCurrentItem(nextItemPosition);
                 }
             }
         };
-        final PagerAdapter pagerAdapter = new CardPagerAdapter(getSupportFragmentManager(), this, loadWords(subtopicId), answerClickHandler);
+        final PagerAdapter pagerAdapter = new CardPagerAdapter(getSupportFragmentManager(), this, loadWords(mSubtopicId), answerClickHandler);
         mViewPager.setAdapter(pagerAdapter);
 
-//        final View nextButton = findViewById(R.id.btnNext);
-//        nextButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
-//            }
-//        });
-//
-//        final View prevButton = findViewById(R.id.btnPrev);
-//        prevButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
-//            }
-//        });
+        final View nextButton = findViewById(R.id.btnNext);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int newPageNum = mViewPager.getCurrentItem() + 1;
+                if(newPageNum >= words.size()) findViewById(R.id.btnsBar).setVisibility(LinearLayout.GONE);
+                mViewPager.setCurrentItem(newPageNum);
+            }
+        });
+
+        final View prevButton = findViewById(R.id.btnPrev);
+        prevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
+            }
+        });
     }
 
     private List<Word> loadWords(long subtopicId) {
@@ -183,7 +188,7 @@ public class CardActivity extends AppCompatActivity {
                 trueFalseFragment.setAnswerClickHandler(mAnswerClickHandler);
                 return trueFalseFragment;
             } else {
-                return StatsFragment.newInstance(numOfRightAnswers[0], numOfWrongAnswers[0]);
+                return StatsFragment.newInstance(numOfRightAnswers[0], numOfWrongAnswers[0], mSubtopicId);
             }
         }
 
