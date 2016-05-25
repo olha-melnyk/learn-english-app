@@ -58,12 +58,13 @@ public class StatsFragment extends Fragment {
         rightTextView.setText(Integer.toString(mRightAnswers));
         wrongTextView.setText(Integer.toString(mWrongAnswers));
 
+        final long subtopic = mSubtopicId;
+
         final Button tryButton = (Button) viewStats.findViewById(R.id.tryAgainBtn);
         tryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), CardActivity.class);
-                long subtopic = mSubtopicId;
                 intent.putExtra("subtopic_id", subtopic);
                 startActivity(intent);
             }
@@ -74,7 +75,6 @@ public class StatsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), MainActivity.class);
-                long subtopic = mSubtopicId;
                 intent.putExtra("subtopic_id", subtopic);
                 startActivity(intent);
             }
