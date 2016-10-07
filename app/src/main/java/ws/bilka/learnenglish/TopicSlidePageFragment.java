@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,11 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.google.gson.Gson;
+
 import java.util.List;
+
 import ws.bilka.learnenglish.model.Subtopic;
 import ws.bilka.learnenglish.model.Topic;
 
@@ -20,6 +24,7 @@ public class TopicSlidePageFragment extends Fragment {
     private static final String ARG_TOPIC = "topic";
     private static final String ARG_IMAGE_DRAWABLE_ID = "image";
 
+    private static final String TAG = TopicSlidePageFragment.class.getSimpleName();
     private Topic mTopic;
     private int mImageResourceId;
 
@@ -56,11 +61,11 @@ public class TopicSlidePageFragment extends Fragment {
         topicName.setText(mTopic.getTopicName());
         topicTranslation.setText(mTopic.getTopicTranslation());
         imageView.setImageResource(mImageResourceId);
+        Log.i(TAG,mImageResourceId + "image");
 
-        final List<Subtopic>    subtopics = mTopic.getSubtopics();
+        final List<Subtopic> subtopics = mTopic.getSubtopics();
         final SubtopicListAdapter adapter = new SubtopicListAdapter(this.getContext(), subtopics);
         listView.setAdapter(adapter);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

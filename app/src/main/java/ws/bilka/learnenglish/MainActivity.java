@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
 
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new TopicPagerAdapter(getSupportFragmentManager(), this, loadTopics());
+        Log.i(TAG, "topic " + loadTopics());
         mPager.setAdapter(mPagerAdapter);
     }
 
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
 
     private List<Topic> loadTopics() {
         WordsSQLiteDbHelper dbHelper = new WordsSQLiteDbHelper(this);
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity
 
         HashMap<String, Topic> map = new HashMap<>();
 
-        while (hasNext) {
+        while(hasNext) {
             String topicName = cursor.getString(0);
             String topicTranslation = cursor.getString(1);
 
@@ -89,7 +93,7 @@ public class MainActivity extends AppCompatActivity
 
             Subtopic subtopic = new Subtopic(subtopicId, subtopicName, subtopicTranslation);
 
-            if (map.containsKey(topicName)) {
+            if(map.containsKey(topicName)) {
                 map.get(topicName).addSubtopic(subtopic);
             } else {
                 Topic topic = new Topic(topicName, topicTranslation);
